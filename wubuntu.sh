@@ -58,7 +58,7 @@ cat << "EOF"
 ================================================
 EOF
 echo -e "\nPlease wait, installing wuseman's 'must have' packages."
-apt-get install -qq samba cifs-utils aptitude libgcrypt-* adb fastboot elinks links lynx ca-certificates gnutls-dev libglib2.0-dev git cmake automake pkg-config build-essential lm-sensors hddtemp smartmontools hddtemp nload unzip zip unrar rar p7zip atool screen weechat tcl8.6 libtcl8.6 zlib1g screenfetch inxi pciutils vim rtorrent iptables sed net-tools  libjson-c-dev json-glib-tools libjs-json tclcurl mcrypt mutt ssmtp syslog-ng tcllib tclcurl tcllib tcl-tls tcl-xmlrpc libtcl8.6 tcl-dev tcl8.6-dev tcl-xmlrpc figlet sshfs xmlrpc-api-utils lynx links elinks software-properties-common python3-software-properties netcat nmap pytho*-cryptog* npm subversion lftp curl openssh-server ca-certificates -y &> /dev/null
+apt-get install -qq samba cifs-utils aptitude libgcrypt-* adb fastboot htop elinks links lynx ca-certificates gnutls-dev libglib2.0-dev git cmake automake pkg-config build-essential lm-sensors hddtemp smartmontools hddtemp nload unzip zip unrar rar p7zip atool screen weechat tcl8.6 libtcl8.6 zlib1g screenfetch inxi pciutils vim rtorrent iptables sed net-tools  libjson-c-dev json-glib-tools libjs-json tclcurl mcrypt mutt ssmtp syslog-ng tcllib tclcurl tcllib tcl-tls tcl-xmlrpc libtcl8.6 tcl-dev tcl8.6-dev tcl-xmlrpc figlet sshfs xmlrpc-api-utils lynx links elinks software-properties-common python3-software-properties netcat nmap pytho*-cryptog* npm subversion lftp curl openssh-server ca-certificates -y &> /dev/null
 apt-get -qq update &> /dev/null
 apt-get -qq upgrade -y &> /dev/null
 apt-get -qq autoremove -y &> /dev/null
