@@ -248,14 +248,14 @@ EOF
 echo -e "\nAdding ppa:certbot/certbot to our sources.."
 echo -ne '\n' | sudo add-apt-repository ppa:certbot/certbot &> /dev/null
 echo "...Done"
-echo -e "\nPlease wait, updated repos so we will get the latest version."
+echo -e "\nPlease wait, updating repos so we will get the latest version..."
 apt-get update -qq &> /dev/null
 echo "...Done"
-echo -e "\nInstalling python-certbot-apache wich is required for certbot\n"
+echo -e "\nInstalling python-certbot-apache wich is required for certbot\n..."
 apt-get -qq install python-certbot-apache -y
-echo "...Done"
+echo -e "...Done\n"
 /usr/bin/certbot --apache -d wuseman.com
-echo "...All has been done, visit your website with https:// now.."
+echo -e "\n...Done, visit your website on https:// ..\n\n"
 }
 
 sample() {
