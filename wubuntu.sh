@@ -42,6 +42,7 @@ echo "        -o OPENVPN       - Install and setup OpenVPN Server"
 echo "        -O OWNCLOUD      - Install and setup Owncloud for apache2 (all php modules is included, also mysql commands to get started)"
 echo "        -W WORDPRESS     - Install and setup wordpress"
 echo "        -M MOPIDY        - Install and setup mopidy server"
+echo "        -Z ZNC           - Install and setup znc"
 echo ""
 }
 
@@ -278,8 +279,8 @@ openvpn() {
 cat << "EOF"
    U  ___ u  ____   U _____ u _   _  __     __   ____     _   _     
     \/"_ \/U|  _"\ u\| ___"|/| \ |"| \ \   /"/uU|  _"\ u | \ |"|    
-    | | | |\| |_) |/ |  _|" <|  \| |> \ \ / // \| |_) |/<|  \| |>    Author:  wuseman
-.-,_| |_| | |  __/   | |___ U| |\  |u /\ V /_,-.|  __/  U| |\  |u    Contact: wuseman@nr1.nu
+    | | | |\| |_) |/ |  _|" <|  \| |> \ \ / // \| |_) |/<|  \| |>    
+.-,_| |_| | |  __/   | |___ U| |\  |u /\ V /_,-.|  __/  U| |\  |u    
  \_)-\___/  |_|      |_____| |_| \_| U  \_/-(_/ |_|      |_| \_|    
       \\    ||>>_    <<   >> ||   \\,-.//       ||>>_    ||   \\,-. 
      (__)  (__)__)  (__) (__)(_")  (_/(__)     (__)__)   (_")  (_/  
@@ -1042,6 +1043,16 @@ exit 1
 }
 
 emagnet() {
+cat << "EOF" 
+U _____ u  __  __      _       ____    _   _   U _____ u  _____   
+\| ___"|/U|' \/ '|uU  /"\  uU /"___|u | \ |"|  \| ___"|/ |_ " _|  
+ |  _|"  \| |\/| |/ \/ _ \/ \| |  _ /<|  \| |>  |  _|"     | |    Author:  wuseman
+ | |___   | |  | |  / ___ \  | |_| | U| |\  |u  | |___    /| |\   Contact: <wuseman@nr1.nu>
+ |_____|  |_|  |_| /_/   \_\  \____|  |_| \_|   |_____|  u |_|U   
+ <<   >> <<,-,,-.   \\    >>  _)(|_   ||   \\,-.<<   >>  _// \\_  
+(__) (__) (./  \.) (__)  (__)(__)__)  (_")  (_/(__) (__)(__) (__) 
+
+EOF
 echo "Cloning emagnet from github.com/wuseman/EMAGNET"
 git clone https://github.com/wuseman/EMAGNET
 echo "...Done"
@@ -1148,6 +1159,18 @@ fi
 
 
 mopidy() {
+cat << "EOF"
+         ___     _,.---._        _ __    .=-.-.                          
+  .-._ .'=.'\  ,-.' , -  `.   .-`.' ,`. /==/_ /_,..---._  ,--.-.  .-,--. 
+ /==/ \|==|  |/==/_,  ,  - \ /==/, -   \==|, /==/,   -  \/==/- / /=/_ /  
+ |==|,|  / - |==|   .=.     |==| _ .=. |==|  |==|   _   _\==\, \/=/. /   
+ |==|  \/  , |==|_ : ;=:  - |==| , '=',|==|- |==|  .=.   |\==\  \/ -/     Author:  wuseman
+ |==|- ,   _ |==| , '='     |==|-  '..'|==| ,|==|,|   | -| |==|  ,_/      Contact: <wuseman@nr1.nu>
+ |==| _ /\   |\==\ -    ,_ /|==|,  |   |==|- |==|  '='   / \==\-, /      
+ /==/  / / , / '.='. -   .' /==/ - |   /==/. /==|-,   _`/  /==/._/       
+ `--`./  `--`    `--`--''   `--`---'   `--`-``-.`.____.'   `--`-`        
+ 
+ EOF
 echo "Updating repositories.."
 wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
 sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/stretch.list
@@ -1162,7 +1185,50 @@ echo "...Done\n"
 echo "Mopidy has been setup"
 }
 
-while getopts ":aMboegcwihlpruOWm" getopt; do
+znc() {
+cat << "EOF"
+  _____  _   _      ____
+ |"_  /u| \ |"|  U /"___|
+ U / //<|  \| |> \| | u   Author:  wuseman
+ \/ /_ U| |\  |u  | |/__  Contact: <wuseman@nr1.nu>
+ /____| |_| \_|    \____|
+ _//<<,-||   \\,-._// \\
+(__) (_/(_")  (_/(__)(__)
+
+EOF
+
+echo "Upgrading repositories..."
+sudo apt-get -qq update && sudo apt-get upgrade -y &> /dev/null
+echo -e "...Done\n"
+
+echo "Installing required packages..."
+sudo apt-get -qq install build-essential checkinstall libssl-dev &> /dev/null
+echo -e "...Done\n"
+
+echo "Downloading znc..."
+wget -q https://znc.in/releases/znc-1.7.3.tar.gz
+echo -e "...Done\n"
+
+echo "Extracting znc..."
+tar -xf znc-1.7.3.tar.gz
+echo -e "...Done\n"
+
+echo "Configuring znc..."
+cd znc-1.7.3; ./configure &> /dev/null
+echo -e "...Done\n"
+
+echo "Running make...(this will take some time)"
+make &> /dev/null
+echo -e "...Done\n"
+
+echo "Installing znc..."
+make install &> /dev/null
+echo -e "...Done"
+
+echo -e "\n\nznc has been successfully installed, run znc --makeconf for configure your new bnc...\n\n"
+}
+
+while getopts ":aMboegcwihlpruOWmz" getopt; do
 
   case $getopt in
      b) bitlbee ;;
@@ -1182,6 +1248,7 @@ while getopts ":aMboegcwihlpruOWm" getopt; do
      o) openvpn ;;
      O) owncloud ;;
      W) wordpress ;;
+     z) znc ;;
     \?) echo " Error: Invalid option: -$OPTARG" >&2  ;;
   esac
 done
