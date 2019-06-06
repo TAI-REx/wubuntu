@@ -688,26 +688,35 @@ owncloud() {
 cat << "EOF"
                        ___ _                 _ 
   _____      ___ __   / __\ | ___  _   _  __| |
- / _ \ \ /\ / / '_ \ / /  | |/ _ \| | | |/ _` |
-| (_) \ V  V /| | | / /___| | (_) | |_| | (_| |
+ / _ \ \ /\ / / '_ \ / /  | |/ _ \| | | |/ _` | Author: wuseman
+| (_) \ V  V /| | | / /___| | (_) | |_| | (_| | Contact: <wuseman@nr1.nu>
  \___/ \_/\_/ |_| |_\____/|_|\___/ \__,_|\__,_|
-
+  
+         This require apache2 installed
 EOF
-sudo curl -s https://download.owncloud.org/download/repositories/stable/Ubuntu_16.04/Release.key | sudo -qq apt-key add
-echo 'deb https://download.owncloud.org/download/repositories/stable/Ubuntu_16.04/ /' | sudo tee /etc/apt/sources.list.d/owncloud.list
-echo "Installing owncloud-files, please wait"
-sudo apt-get install owncloud-files &> /dev/null
-echo "...Done"
-echo "Reloading apache2"
+
+cd /var/www/html
+echo "Please wait, downloading tarball from from owncloud.org..."
+https://download.owncloud.org/community/owncloud-10.2.0.tar.bz2
+echo -e "...Done\n"
+echo "Extracting owncloud into /var/www/html..."
+tar -xf owncloud-10.2.0.tar.bz2
+echo -e "...Done\n"
+echo "Reloading apache2 configuraton..."
 sudo systemctl reload apache2
+echo -e "...Done"
+echo -e "\nCreating a new database with name own..."
+mysql -u root -pSETYOURPASSWORD -e "CREATE DATABASE owncloud DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;" &> /dev/null
 echo "...Done"
-echo -e "\n\n\e[4mCopy and paste\e[0m \n\nCREATE DATABASE owncloud;"
-echo "GRANT ALL ON owncloud.* to 'owncloud'@'localhost' IDENTIFIED BY 'set_database_password';"
-echo "FLUSH PRIVILEGES;"
-echo "exit;"
-mysql -u root -p
+echo -e "\nGiving all provileges to wordpress@localhost.."
+mysql -u root -pSETYOURPASSWORD -e "GRANT ALL ON owncloud.* TO 'owncloud'@'localhost' IDENTIFIED BY 'odemnn';" &> /dev/null
+echo "...Done"
+echo -e "\nFlashing privileges.."
+mysql -u root -pSETYOURPASSWORD -e "FLUSH PRIVILEGES;" &> /dev/null 
+echo "...Done"
 echo -e "\n\nDone, http://localhost/owncloud...\n\n"
 }
+
 
 eggdrop() {
 cat << "EOF"
@@ -719,13 +728,14 @@ cat << "EOF"
 \____/ \____/\____/___/ \_| \_|\___/\_|    
 ===========================================
 EOF
+echo "Eggdrop require tcl packages, install wuseman's packages first, ./wubuntu.sh -w"
 echo -e "\nPlease wait, downloading eggdrop from eggheads.org"
-wget -q https://ftp.eggheads.org/pub/eggdrop/source/1.8/eggdrop-1.8.4.tar.gz
+wget -q https://ftp.eggheads.org/pub/eggdrop/source/1.8/eggdrop-1.8.4.tar.gz --no-check-certificate
 echo -e "...Done\n"
 echo -e "Extracting eggdrop.."
-tar -xf eggdrop*.tar.gz
+tar -xf eggdrop-1.8.4.tar.gz
 echo -e "...Done\n"
-cd eggdrop*
+cd eggdrop-1.8.4
 echo "Configuring eggdrop"
 ./configure &> /dev/null
 echo -e "...Done\n"
