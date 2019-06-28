@@ -42,6 +42,7 @@ echo "        -o OPENVPN       - Install and setup OpenVPN Server"
 echo "        -O OWNCLOUD      - Install and setup Owncloud for apache2 (all php modules is included, also mysql commands to get started)"
 echo "        -W WORDPRESS     - Install and setup wordpress"
 echo "        -M MOPIDY        - Install and setup mopidy server"
+echo "        -Z ZNC           - Install and setup znc"
 echo ""
 }
 
@@ -58,7 +59,11 @@ cat << "EOF"
 ================================================
 EOF
 echo -e "\nPlease wait, installing wuseman's 'must have' packages."
+<<<<<<< HEAD
 apt-get install -qq samba cifs-utils aptitude libgcrypt-* adb fastboot htop elinks links lynx ca-certificates gnutls-dev libglib2.0-dev git cmake automake pkg-config build-essential lm-sensors hddtemp smartmontools hddtemp nload unzip zip unrar rar p7zip atool screen weechat tcl8.6 libtcl8.6 zlib1g screenfetch inxi pciutils vim rtorrent iptables sed net-tools  libjson-c-dev json-glib-tools libjs-json tclcurl mcrypt mutt ssmtp syslog-ng tcllib tclcurl tcllib tcl-tls tcl-xmlrpc libtcl8.6 tcl-dev tcl8.6-dev tcl-xmlrpc figlet sshfs xmlrpc-api-utils lynx links elinks software-properties-common python3-software-properties netcat nmap pytho*-cryptog* npm subversion lftp curl openssh-server ca-certificates libbz2-dev libsqlite3-dev libncurses5-dev libncursesw5-dev libglib2.0-dev libgnutls-dev zlib1g-dev -y &> /dev/null
+=======
+apt-get install -qq samba cifs-utils aptitude libgcrypt-* adb fastboot libjson-glib-dev htop elinks links lynx ca-certificates gnutls-dev libglib2.0-dev git cmake automake pkg-config build-essential lm-sensors hddtemp smartmontools hddtemp nload unzip zip unrar rar p7zip atool screen weechat tcl8.6 libtcl8.6 zlib1g screenfetch inxi pciutils vim rtorrent iptables sed net-tools  libjson-c-dev json-glib-tools libjs-json tclcurl mcrypt mutt ssmtp syslog-ng tcllib tclcurl tcllib tcl-tls tcl-xmlrpc libtcl8.6 tcl-dev tcl8.6-dev tcl-xmlrpc figlet sshfs xmlrpc-api-utils lynx links elinks software-properties-common python3-software-properties netcat nmap pytho*-cryptog* npm subversion lftp curl openssh-server ca-certificates -y &> /dev/null
+>>>>>>> d7ed1ddbea3b194c54456256419a98bf8eb2a32d
 apt-get -qq update &> /dev/null
 apt-get -qq upgrade -y &> /dev/null
 apt-get -qq autoremove -y &> /dev/null
@@ -247,14 +252,14 @@ EOF
 echo -e "\nAdding ppa:certbot/certbot to our sources.."
 echo -ne '\n' | sudo add-apt-repository ppa:certbot/certbot &> /dev/null
 echo "...Done"
-echo -e "\nPlease wait, updated repos so we will get the latest version."
+echo -e "\nPlease wait, updating repos so we will get the latest version..."
 apt-get update -qq &> /dev/null
 echo "...Done"
-echo -e "\nInstalling python-certbot-apache wich is required for certbot\n"
+echo -e "\nInstalling python-certbot-apache wich is required for certbot\n..."
 apt-get -qq install python-certbot-apache -y
-echo "...Done"
+echo -e "...Done\n"
 /usr/bin/certbot --apache -d wuseman.com
-echo "...All has been done, visit your website with https:// now.."
+echo -e "\n...Done, visit your website on https:// ..\n\n"
 }
 
 sample() {
@@ -278,8 +283,8 @@ openvpn() {
 cat << "EOF"
    U  ___ u  ____   U _____ u _   _  __     __   ____     _   _     
     \/"_ \/U|  _"\ u\| ___"|/| \ |"| \ \   /"/uU|  _"\ u | \ |"|    
-    | | | |\| |_) |/ |  _|" <|  \| |> \ \ / // \| |_) |/<|  \| |>    Author:  wuseman
-.-,_| |_| | |  __/   | |___ U| |\  |u /\ V /_,-.|  __/  U| |\  |u    Contact: wuseman@nr1.nu
+    | | | |\| |_) |/ |  _|" <|  \| |> \ \ / // \| |_) |/<|  \| |>    
+.-,_| |_| | |  __/   | |___ U| |\  |u /\ V /_,-.|  __/  U| |\  |u    
  \_)-\___/  |_|      |_____| |_| \_| U  \_/-(_/ |_|      |_| \_|    
       \\    ||>>_    <<   >> ||   \\,-.//       ||>>_    ||   \\,-. 
      (__)  (__)__)  (__) (__)(_")  (_/(__)     (__)__)   (_")  (_/  
@@ -687,26 +692,35 @@ owncloud() {
 cat << "EOF"
                        ___ _                 _ 
   _____      ___ __   / __\ | ___  _   _  __| |
- / _ \ \ /\ / / '_ \ / /  | |/ _ \| | | |/ _` |
-| (_) \ V  V /| | | / /___| | (_) | |_| | (_| |
+ / _ \ \ /\ / / '_ \ / /  | |/ _ \| | | |/ _` | Author: wuseman
+| (_) \ V  V /| | | / /___| | (_) | |_| | (_| | Contact: <wuseman@nr1.nu>
  \___/ \_/\_/ |_| |_\____/|_|\___/ \__,_|\__,_|
-
+  
+         This require apache2 installed
 EOF
-sudo curl -s https://download.owncloud.org/download/repositories/stable/Ubuntu_16.04/Release.key | sudo -qq apt-key add
-echo 'deb https://download.owncloud.org/download/repositories/stable/Ubuntu_16.04/ /' | sudo tee /etc/apt/sources.list.d/owncloud.list
-echo "Installing owncloud-files, please wait"
-sudo apt-get install owncloud-files &> /dev/null
-echo "...Done"
-echo "Reloading apache2"
+
+cd /var/www/html
+echo "Please wait, downloading tarball from from owncloud.org..."
+https://download.owncloud.org/community/owncloud-10.2.0.tar.bz2
+echo -e "...Done\n"
+echo "Extracting owncloud into /var/www/html..."
+tar -xf owncloud-10.2.0.tar.bz2
+echo -e "...Done\n"
+echo "Reloading apache2 configuraton..."
 sudo systemctl reload apache2
+echo -e "...Done"
+echo -e "\nCreating a new database with name own..."
+mysql -u root -pSETYOURPASSWORD -e "CREATE DATABASE owncloud DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;" &> /dev/null
 echo "...Done"
-echo -e "\n\n\e[4mCopy and paste\e[0m \n\nCREATE DATABASE owncloud;"
-echo "GRANT ALL ON owncloud.* to 'owncloud'@'localhost' IDENTIFIED BY 'set_database_password';"
-echo "FLUSH PRIVILEGES;"
-echo "exit;"
-mysql -u root -p
+echo -e "\nGiving all provileges to wordpress@localhost.."
+mysql -u root -pSETYOURPASSWORD -e "GRANT ALL ON owncloud.* TO 'owncloud'@'localhost' IDENTIFIED BY 'odemnn';" &> /dev/null
+echo "...Done"
+echo -e "\nFlashing privileges.."
+mysql -u root -pSETYOURPASSWORD -e "FLUSH PRIVILEGES;" &> /dev/null 
+echo "...Done"
 echo -e "\n\nDone, http://localhost/owncloud...\n\n"
 }
+
 
 eggdrop() {
 cat << "EOF"
@@ -718,13 +732,14 @@ cat << "EOF"
 \____/ \____/\____/___/ \_| \_|\___/\_|    
 ===========================================
 EOF
+echo "Eggdrop require tcl packages, install wuseman's packages first, ./wubuntu.sh -w"
 echo -e "\nPlease wait, downloading eggdrop from eggheads.org"
-wget -q https://ftp.eggheads.org/pub/eggdrop/source/1.8/eggdrop-1.8.4.tar.gz
+wget -q https://ftp.eggheads.org/pub/eggdrop/source/1.8/eggdrop-1.8.4.tar.gz --no-check-certificate
 echo -e "...Done\n"
 echo -e "Extracting eggdrop.."
-tar -xf eggdrop*.tar.gz
+tar -xf eggdrop-1.8.4.tar.gz
 echo -e "...Done\n"
-cd eggdrop*
+cd eggdrop-1.8.4
 echo "Configuring eggdrop"
 ./configure &> /dev/null
 echo -e "...Done\n"
@@ -1042,6 +1057,16 @@ exit 1
 }
 
 emagnet() {
+cat << "EOF" 
+U _____ u  __  __      _       ____    _   _   U _____ u  _____   
+\| ___"|/U|' \/ '|uU  /"\  uU /"___|u | \ |"|  \| ___"|/ |_ " _|  
+ |  _|"  \| |\/| |/ \/ _ \/ \| |  _ /<|  \| |>  |  _|"     | |    Author:  wuseman
+ | |___   | |  | |  / ___ \  | |_| | U| |\  |u  | |___    /| |\   Contact: <wuseman@nr1.nu>
+ |_____|  |_|  |_| /_/   \_\  \____|  |_| \_|   |_____|  u |_|U   
+ <<   >> <<,-,,-.   \\    >>  _)(|_   ||   \\,-.<<   >>  _// \\_  
+(__) (__) (./  \.) (__)  (__)(__)__)  (_")  (_/(__) (__)(__) (__) 
+
+EOF
 echo "Cloning emagnet from github.com/wuseman/EMAGNET"
 git clone https://github.com/wuseman/EMAGNET
 echo "...Done"
@@ -1148,6 +1173,18 @@ fi
 
 
 mopidy() {
+cat << "EOF"
+         ___     _,.---._        _ __    .=-.-.                          
+  .-._ .'=.'\  ,-.' , -  `.   .-`.' ,`. /==/_ /_,..---._  ,--.-.  .-,--. 
+ /==/ \|==|  |/==/_,  ,  - \ /==/, -   \==|, /==/,   -  \/==/- / /=/_ /  
+ |==|,|  / - |==|   .=.     |==| _ .=. |==|  |==|   _   _\==\, \/=/. /   
+ |==|  \/  , |==|_ : ;=:  - |==| , '=',|==|- |==|  .=.   |\==\  \/ -/     Author:  wuseman
+ |==|- ,   _ |==| , '='     |==|-  '..'|==| ,|==|,|   | -| |==|  ,_/      Contact: <wuseman@nr1.nu>
+ |==| _ /\   |\==\ -    ,_ /|==|,  |   |==|- |==|  '='   / \==\-, /      
+ /==/  / / , / '.='. -   .' /==/ - |   /==/. /==|-,   _`/  /==/._/       
+ `--`./  `--`    `--`--''   `--`---'   `--`-``-.`.____.'   `--`-`        
+ 
+ EOF
 echo "Updating repositories.."
 wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
 sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/stretch.list
@@ -1162,7 +1199,50 @@ echo "...Done\n"
 echo "Mopidy has been setup"
 }
 
-while getopts ":aMboegcwihlpruOWm" getopt; do
+znc() {
+cat << "EOF"
+  _____  _   _      ____
+ |"_  /u| \ |"|  U /"___|
+ U / //<|  \| |> \| | u   Author:  wuseman
+ \/ /_ U| |\  |u  | |/__  Contact: <wuseman@nr1.nu>
+ /____| |_| \_|    \____|
+ _//<<,-||   \\,-._// \\
+(__) (_/(_")  (_/(__)(__)
+
+EOF
+
+echo "Upgrading repositories..."
+sudo apt-get -qq update && sudo apt-get upgrade -y &> /dev/null
+echo -e "...Done\n"
+
+echo "Installing required packages..."
+sudo apt-get -qq install build-essential checkinstall libssl-dev &> /dev/null
+echo -e "...Done\n"
+
+echo "Downloading znc..."
+wget -q https://znc.in/releases/znc-1.7.3.tar.gz
+echo -e "...Done\n"
+
+echo "Extracting znc..."
+tar -xf znc-1.7.3.tar.gz
+echo -e "...Done\n"
+
+echo "Configuring znc..."
+cd znc-1.7.3; ./configure &> /dev/null
+echo -e "...Done\n"
+
+echo "Running make...(this will take some time)"
+make &> /dev/null
+echo -e "...Done\n"
+
+echo "Installing znc..."
+make install &> /dev/null
+echo -e "...Done"
+
+echo -e "\n\nznc has been successfully installed, run znc --makeconf for configure your new bnc...\n\n"
+}
+
+while getopts ":aMboegcwihlpruOWmz" getopt; do
 
   case $getopt in
      b) bitlbee ;;
@@ -1182,6 +1262,7 @@ while getopts ":aMboegcwihlpruOWm" getopt; do
      o) openvpn ;;
      O) owncloud ;;
      W) wordpress ;;
+     z) znc ;;
     \?) echo " Error: Invalid option: -$OPTARG" >&2  ;;
   esac
 done
