@@ -3,7 +3,6 @@
 #### Author: wuseman
 #### Created: 20181218
 #### Desc: Script for fix mostly things on a new Ubuntu Server
-####       to fix the boring stuff for
 ####
 
 #set -e
@@ -223,14 +222,14 @@ echo -e "\nInstalling mysql-server.."
 sudo apt install mysql-server -qq -y
 echo -e "...Done"
 echo -e "\nInstalling php with most importat php-modules.."
-apt install php-pear php-fpm php-dev php-zip php-curl php-xmlrpc php-gd php-mysql php-mbstring php-xml libapache2-mod-php php-gnupg php-email-validator php-auth php-cache php-all-dev php-cgi php-cli php-curl php-sqlite3 php-xmlrpc php-geoip php-imap php-json php-mcrypt php-mdb2 php-net-ftp php-net-ipv4 php-net-ipv6 php-mysql php-mcrypt php-mbstring php-mime-type -qq -y &> /dev/null
+apt install php-pear php-fpm php-dev php-zip php-curl php-xmlrpc php-gd php-mysql php-mbstring php-xml libapache2-mod-php php-gnupg php-email-validator php-auth php-cache php-all-dev php-cgi php-cli php-curl php-sqlite3 php-xmlrpc php-geoip php-imap php-json php-mcrypt php-mdb2 php-net-ftp php-net-ipv4 php-net-ipv6 php-mysql php-mcrypt php-mbstring php-mime-type php-intl -qq -y &> /dev/null
 echo -e "...Done"
 echo -e "\nRestarting apache2"
 service apache2 restart &> /dev/null
 echo ""
-php -r 'echo "PHP installation is working fine and everything has been set.";'
+php -r 'If you see this text then php is works in apache2.";'
 echo -e "...Done"
-echo -e "\napache, mysql and php modules has been installed, visit http://localhost :)\n"
+echo -e "\napache, mysql and php modules has been installed, browse to: http://localhost\n"
 exit 
 sudo echo "It Works! :)" > /var/www/html/index.html
 }
@@ -697,7 +696,7 @@ EOF
 
 cd /var/www/html
 echo "Please wait, downloading tarball from from owncloud.org..."
-https://download.owncloud.org/community/owncloud-10.2.0.tar.bz2
+wget https://download.owncloud.org/community/owncloud-10.2.0.tar.bz2
 echo -e "...Done\n"
 echo "Extracting owncloud into /var/www/html..."
 tar -xf owncloud-10.2.0.tar.bz2
@@ -714,7 +713,7 @@ echo "...Done"
 echo -e "\nFlashing privileges.."
 mysql -u root -pSETYOURPASSWORD -e "FLUSH PRIVILEGES;" &> /dev/null 
 echo "...Done"
-echo -e "\n\nDone, http://localhost/owncloud...\n\n"
+echo -e "\n\nDone, browse to http://localhost/owncloud...\n\n"
 }
 
 
@@ -806,11 +805,10 @@ zip_check ()
   else
     echo "# Installing zip..."
     if [ "$DISTRO" = "gentoo" ]; then emerge --ask zip; fi
-    if [ "$DISTRO" = "ubuntu" ]; then apt-get install zip; fi
+    if [ "$DISTRO" = "ubuntu" ]; then apt-get install zip;fi
     if [ "$DISTRO" = "debian" ]; then apt-get install zip; fi
     if [ "$?" -ne "0" ]; then
-      echo "# Unable to install ZIP! Your base system has a problem; please check your default 
-OS's package repositories because ZIP should work."
+      echo "# Unable to install ZIP!"
       echo "# Repository installation aborted."
       exit 1
     fi
@@ -828,7 +826,7 @@ unzip_check ()
     if [ "$DISTRO" = "ubuntu" ]; then apt-get install unzip; fi
     if [ "$DISTRO" = "debian" ]; then apt-get install unzip; fi
     if [ "$?" -ne "0" ]; then
-      echo "# Unable to install UNZIP! Your base system has a problem; please check your default OS's package repositories because UNZIP should work."
+      echo "# Unable to install UNZIP"
       echo "# Repository installation aborted."
       exit 1
     fi
@@ -1012,7 +1010,7 @@ ______ _____ _____ _     ______ _____ _____
 EOF
 echo -e "Checking for updates and also if reqiured packages has been installed"
 sudo -qq apt-get install aptitude -qq -y &> /dev/null
-sudo apt-get install build-essential libotr5-dev libgnutls-dev libglib2.0-dev xinetd json-glib-1.0 libjson-glib-dev libtool-bin libtool -qq -y && /dev/null
+sudo apt-get install build-essential libotr5-dev libgnutls-dev libglib2.0-dev xinetd json-glib-1.0 libjson-glib-dev libtool-bin libtool -qq -y &> /dev/null
 echo -e "...Done\n"
 echo -e "Downloading bitlbee from bitlbee.org"
 wget -q http://get.bitlbee.org/src/bitlbee-3.5.1.tar.gz
@@ -1021,7 +1019,7 @@ echo -e "Extracting bitlbee..."
 tar -xf bitlbee*
 cd bitlbee-3.5.1
 echo -e "...Done\n"
-echo -e "Configuring bitlbee"
+echo -e "Configuring bitlbee with otr enable"
 ./configure --otr=1 &> /dev/null
 echo -e "...Done\n"
 echo -e "Please wait, compiling bitlebee this gonna take a while.."
@@ -1031,7 +1029,7 @@ echo -e "Installing bitlbee via make install"
 make install &> /dev/null
 make install-dev &> /dev/null
 echo -e "...Done\n"
-echo -e "========== BITLBEE DEFAULT HAS BEEN INSTALLED, GOING TO INSTALL BITLBEE FACEBOOK NOW ==========\n"
+echo -e "========== BITLBEE DEFAULT HAS BEEN INSTALLED, GOING TO INSTALL BITLBEE FACEBOOK PLUGIN NOW ==========\n"
 sleep 2
 mkdir -p /var/lib/bitlbee/ &> /dev/null
 echo -e "Cloning bitlbee-facebook from github"
@@ -1180,7 +1178,7 @@ cat << "EOF"
  /==/  / / , / '.='. -   .' /==/ - |   /==/. /==|-,   _`/  /==/._/       
  `--`./  `--`    `--`--''   `--`---'   `--`-``-.`.____.'   `--`-`        
  
- EOF
+EOF
 echo "Updating repositories.."
 wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
 sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/stretch.list
@@ -1238,8 +1236,7 @@ echo -e "...Done"
 echo -e "\n\nznc has been successfully installed, run znc --makeconf for configure your new bnc...\n\n"
 }
 
-while getopts ":aMboegcwihlpruOWmz" getopt; do
-
+while getopts ":aMboegcwihlpruOWmzE" getopt; do
   case $getopt in
      b) bitlbee ;;
      g) glftpd ;;
