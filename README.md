@@ -11,17 +11,19 @@ wubuntu has been created cause it sucks and it's a waste of time to install and 
 
 ### Tools that will be installed and configured wihtout lift a finger without just run above command: 
 
+* = You must edit some values inside wubuntu.sh, for example mysql password.
+
 | Program            |  Option:       | Desc |
 | :----------------- | :------------- | :--------------------------------|
 | Bitlbee            | -b\|--bitlbee   | Install bitlbee with facebook plugin |
-| Glftpd             | -g\|--glftpd    | Download and install glftpd and then configure glftpd. |
-| Initramfs          |                | Install and conrigure a`Initramfs with SSH supportd and unlock your crypted partition |
+| * Glftpd             | -g\|--glftpd    | Download and install glftpd and then configure glftpd. |
+| * Initramfs          |  -i\|--initramfs | Install and conrigure a`Initramfs with SSH supportd and unlock your crypted partition |
 | Lamp               | -l\|--lamp      | Install apache2, mysql-server and support for php. No configuration will be done |
 | Emagnet            | -E\|--emagnet   | Download emagnet from github and configure emagnet |
 | Motdl              | -m\|--motd      | Download motd.tcl example from nr1.nu and edit the script after your needs |
 | Rar2fs             | -r\|--rar2fs    | Download, compile and configure rar2fs |
-| Owncloud           | -O\|--owncloud  | Download, extract, create database and install owncloud in less then 20 seconds|  
-| Wordpress          | -w\|--wordpress | Download and setup and configure wordpress in 20 seconds or less 
+| * Owncloud           | -O\|--owncloud  | Download, extract, create database and install owncloud in less then 20 seconds|  
+| * Wordpress          | -w\|--wordpress | Download and setup and configure wordpress in 20 seconds or less 
 | Mopidy             | -m\|--mopidy    | Install mopidy server
 | Znc                | -z\|--znc       | Installing and configuring znc bouncer with www support |
 
