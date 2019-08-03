@@ -16,12 +16,16 @@ wubuntu has been created cause it sucks and it's a waste of time to install and 
 | Program            |  Option:       | Desc |
 | :----------------- | :------------- | :--------------------------------|
 | Bitlbee            | -b\|--bitlbee   | Install bitlbee with facebook plugin |
+| * Certbot            | -b\|--certbot   | Install certbot and configure a ssl cert (change mail + host in script)|
 | * Glftpd             | -g\|--glftpd    | Download and install glftpd and then configure glftpd. |
 | * Initramfs          |  -i\|--initramfs | Install and conrigure a`Initramfs with SSH supportd and unlock your crypted partition |
 | Lamp               | -l\|--lamp      | Install apache2, mysql-server and support for php. No configuration will be done |
 | Emagnet            | -E\|--emagnet   | Download emagnet from github and configure emagnet |
+| Eggdrop            | -e\|--eggdrop   | Download eggdrop, configure, make modules, make install and you are done all done by this script |
 | Motdl              | -m\|--motd      | Download motd.tcl example from nr1.nu and edit the script after your needs |
 | Rar2fs             | -r\|--rar2fs    | Download, compile and configure rar2fs |
+| Plexmediaserver    | -p\|--plex      | Download plexmediaserver, configure, setup and all you need to do is to visit localhost:32400/web
+| Openvpn               | -o\|--openvpn       | Installing and configuring openvpn server + client |
 | * Owncloud           | -O\|--owncloud  | Download, extract, create database and install owncloud in less then 20 seconds|  
 | * Wordpress          | -w\|--wordpress | Download and setup and configure wordpress in 20 seconds or less 
 | Mopidy             | -m\|--mopidy    | Install mopidy server
