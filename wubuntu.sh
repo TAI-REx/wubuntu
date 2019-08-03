@@ -707,13 +707,14 @@ echo -e "...Done"
 echo -e "\nCreating a new database with name own..."
 mysql -u root -pSETYOURPASSWORD -e "CREATE DATABASE owncloud DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;" &> /dev/null
 echo "...Done"
-echo -e "\nGiving all provileges to wordpress@localhost.."
-mysql -u root -pSETYOURPASSWORD -e "GRANT ALL ON owncloud.* TO 'owncloud'@'localhost' IDENTIFIED BY 'odemnn';" &> /dev/null
+echo -e "\nGiving all provileges to owncloud@localhost.."
+mysql -u root -pSETYOURPASSWORD -e "GRANT ALL ON owncloud.* TO 'owncloud'@'localhost' IDENTIFIED BY 'randompassword';" &> /dev/null
 echo "...Done"
 echo -e "\nFlashing privileges.."
 mysql -u root -pSETYOURPASSWORD -e "FLUSH PRIVILEGES;" &> /dev/null 
 echo "...Done"
 echo -e "\n\nDone, browse to http://localhost/owncloud...\n\n"
+chown -R www-data:www-data /var/www/
 }
 
 
