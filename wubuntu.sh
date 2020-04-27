@@ -139,6 +139,7 @@ echo -e "\nStarting plex for the first time and adding plex to run at boot "
 systemctl enable plexmediaserver.service
 systemctl start plexmediaserver.service
 echo -e "...Done"
+rm plexmediaserver_1.5.5.3634-995f1dead_amd64.deb &> /dev/null
 echo -e "\nplex-media-server has been installed, visit http://localhost:32400/web :)\n"
 }
 
