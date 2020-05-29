@@ -114,8 +114,8 @@ autoreconf -f -i &> /dev/null
 make &> /dev/null
 make install &> /dev/null
 echo -e "...Done"
+rm -rf ./rar2fs
 echo -e "\nrar2fs has been installed, try to execute rar2fs :)\n"
-rm -rf rar2fs
 }
 
 
