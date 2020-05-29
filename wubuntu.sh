@@ -242,8 +242,10 @@ cat << "EOF"
 | (_|  __/ |  | |_| |_) | (_) | |_  Contact: wuseman@nr1.nu
  \___\___|_|   \__|_.__/ \___/ \__|
 ===================================
+
 EOF
 
+read -p "Domain: " domain
 echo -e "\nAdding ppa:certbot/certbot to our sources.."
 echo -ne '\n' | sudo add-apt-repository ppa:certbot/certbot &> /dev/null
 echo "...Done"
@@ -251,9 +253,9 @@ echo -e "\nPlease wait, updating repos so we will get the latest version..."
 apt-get update -qq &> /dev/null
 echo "...Done"
 echo -e "\nInstalling python-certbot-apache wich is required for certbot\n..."
-apt-get -qq install python-certbot-apache -y
+apt-get install python-certbot-apache -qq -y &> /dev/null
 echo -e "...Done\n"
-/usr/bin/certbot --apache -d wuseman.com
+/usr/bin/certbot --apache -d $domain
 echo -e "\n...Done, visit your website on https:// ..\n\n"
 }
 
