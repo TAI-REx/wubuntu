@@ -114,8 +114,8 @@ autoreconf -f -i &> /dev/null
 make &> /dev/null
 make install &> /dev/null
 echo -e "...Done"
+rm -rf ./rar2fs
 echo -e "\nrar2fs has been installed, try to execute rar2fs :)\n"
-rm -rf rar2fs
 }
 
 
@@ -139,6 +139,7 @@ echo -e "\nStarting plex for the first time and adding plex to run at boot "
 systemctl enable plexmediaserver.service
 systemctl start plexmediaserver.service
 echo -e "...Done"
+rm plexmediaserver_1.5.5.3634-995f1dead_amd64.deb &> /dev/null
 echo -e "\nplex-media-server has been installed, visit http://localhost:32400/web :)\n"
 }
 
@@ -175,12 +176,13 @@ EOF
    chmod -R 700 /etc/initramfs-tools/root/.ssh
    echo -e "\nCopying authorized_keys to initramfs folder.."
    mkdir /etc/initramfs-tools/{root,hooks} &> /dev/null 
-   mkdir /etc/initramfs-tools/root/.ssh &> /dev/null 
+   mkdir /etc/initramfs-tools/.ssh &> /dev/null 
    chmod 777 /etc/initramfs-tools/root/.ssh
    if [[ ! -d "/root/.ssh" ]]; then
    echo -e "\nCan't find any authorized_key file, please fix this and re-run script, aborted..\n";exit 1
    else
    cp /root/.ssh/authorized_keys /etc/initramfs-tools/root/.ssh
+   cp /root/.ssh/authorized_keys /etc/initramfs-tools/.ssh
    chmod 777 /etc/initramfs-tools/root/.ssh/authorized_keys
    fi
    echo "...Done"
