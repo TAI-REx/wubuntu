@@ -247,6 +247,13 @@ cat << "EOF"
 
 EOF
 
+for apps in certbot python3-certbot-apache; do
+   which $apps
+done
+if [[ $? = "1" ]]; then
+   echo -e "$basename$0: internal error -- $apps is required to be installed, exiting..."
+   exit 1
+fi
 read -p "Domain: " domain
 echo -e "\nAdding ppa:certbot/certbot to our sources.."
 echo -ne '\n' | sudo add-apt-repository ppa:certbot/certbot &> /dev/null
