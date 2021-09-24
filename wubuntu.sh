@@ -183,6 +183,7 @@ EOF
    if [[ ! -d "/root/.ssh" ]]; then
    echo -e "\nCan't find any authorized_key file, please fix this and re-run script, aborted..\n";exit 1
    else
+   cat /root/.ssh/authorized_keys > /etc/dropbear-initramfs/authorized_keys
    cp /root/.ssh/authorized_keys /etc/initramfs-tools/root/.ssh
    cp /root/.ssh/authorized_keys /etc/initramfs-tools/.ssh
    chmod 777 /etc/initramfs-tools/root/.ssh/authorized_keys
